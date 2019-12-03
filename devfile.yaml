@@ -151,12 +151,12 @@ commands:
         component: node-frontend-dev
         workdir: /projects/postit-app/node-frontend/
 
-  - name: start DEVMODE node-frontend
-    actions:
-      - type: exec
-        command: tar zxvf /projects/local/node_modules.tar.gz ; rm /projects/local/node_modules.tar.gz ; npm run start
-        component: node-frontend-dev
-        workdir: /projects/postit-app/node-frontend/
+  #- name: start DEVMODE node-frontend
+  #  actions:
+  #    - type: exec
+  #      command: tar zxvf /projects/local/node_modules.tar.gz ; rm /projects/local/node_modules.tar.gz ; npm run start
+  #      component: node-frontend-dev
+  #      workdir: /projects/postit-app/node-frontend/
 
   - name: start PROD node-frontend
     actions:
