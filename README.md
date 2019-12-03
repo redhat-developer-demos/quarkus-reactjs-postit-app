@@ -1,2 +1,7 @@
-# quarkus-reactjs-postit-app
-A Cloud ready Post it app with a Quarkus backend, a Nodejs/Reactjs frontend and a Mongodb database
+# The Cloud Ready Postit application
+A Cloud ready Post it app composed of
+- a Quarkus backend,
+- a Nodejs/Reactjs frontend and
+- a Mongodb database
+
+
