@@ -11,7 +11,7 @@ class PostInput extends React.Component {
       post: {
         title: "",
         content: "",
-        timestamp: 0,  
+        timestamp: 0,
       },
       submitError: false,
     };
@@ -35,7 +35,11 @@ class PostInput extends React.Component {
 
   handleSubmit(event) {
     var now = Date.now();
-    fetch(`${process.env.REACT_APP_BACKEND_HOST}/posts`, {
+    var backendHost = process.env.REACT_APP_BACKEND_HOST;
+    if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+        backendHost = '';
+    }
+    fetch(`${backendHost}/posts`, {
         method: 'POST',
         body: JSON.stringify(Object.assign({}, this.state.post, {timestamp: now})),
         headers: {
@@ -74,15 +78,15 @@ class PostInput extends React.Component {
         <Form>
           <Form.Group controlId="formTitle">
             <Form.Label>Title</Form.Label>
-            <Form.Control 
-              type="text" 
+            <Form.Control
+              type="text"
               value={this.state.title}
               onChange={this.handleTitleChange}
               placeholder="Title" />
           </Form.Group>
           <Form.Group controlId="formContnet">
             <Form.Label>Content</Form.Label>
-            <Form.Control 
+            <Form.Control
               as="textarea"
               value={this.state.content}
               onChange={this.handleContentChange}

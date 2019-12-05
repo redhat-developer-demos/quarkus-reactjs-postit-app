@@ -49,13 +49,17 @@ class Post extends React.Component {
   }
 
   deletePost() {
-    fetch(`${process.env.REACT_APP_BACKEND_HOST}/posts`, {
+    var backendHost = process.env.REACT_APP_BACKEND_HOST;
+    if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+        backendHost = '';
+    }
+    fetch(`${backendHost}/posts`, {
       method: 'DELETE',
       body: JSON.stringify(this.state),
       headers: {
         'Content-Type': 'application/json'
       }
-    })      
+    })
     .then(response => response.json())
     .then(data => console.log(data))
     .catch(error => console.log(error))

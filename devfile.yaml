@@ -106,12 +106,12 @@ commands:
         component: quarkus-backend-dev
         workdir: /projects/postit-app/quarkus-backend
 
-  - name: build JVM quarkus-backend
-    actions:
-      - type: exec
-        command: pkill java; mvn package
-        component: quarkus-backend-dev
-        workdir: /projects/postit-app/quarkus-backend
+#  - name: build JVM quarkus-backend
+#    actions:
+#      - type: exec
+#        command: pkill java; mvn package
+#        component: quarkus-backend-dev
+#        workdir: /projects/postit-app/quarkus-backend
 
   - name: build NATIVE quarkus-backend
     actions:
@@ -144,26 +144,26 @@ commands:
           }
 
 
-  - name: build PROD node-frontend
+ # - name: build PROD node-frontend
+ #   actions:
+ #    - type: exec
+ #      command: tar zxvf /projects/local/node_modules.tar.gz ; rm /projects/local/node_modules.tar.gz  ; npm install
+ #      component: node-frontend-dev
+ #      workdir: /projects/postit-app/node-frontend/
+
+  - name: start DEVMODE node-frontend
     actions:
       - type: exec
-        command: tar zxvf /projects/local/node_modules.tar.gz ; rm /projects/local/node_modules.tar.gz  ; npm install
+        command: tar zxvf /projects/local/node_modules.tar.gz ; rm /projects/local/node_modules.tar.gz ; npm run devmode
         component: node-frontend-dev
         workdir: /projects/postit-app/node-frontend/
 
-  #- name: start DEVMODE node-frontend
-  #  actions:
-  #    - type: exec
-  #      command: tar zxvf /projects/local/node_modules.tar.gz ; rm /projects/local/node_modules.tar.gz ; npm run start
-  #      component: node-frontend-dev
-  #      workdir: /projects/postit-app/node-frontend/
-
-  - name: start PROD node-frontend
-    actions:
-      - type: exec
-        command: node index.js
-        component: node-frontend-dev
-        workdir: /projects/postit-app/node-frontend/
+ #- name: start PROD node-frontend
+ #  actions:
+ #    - type: exec
+ #      command: node index.js
+ #      component: node-frontend-dev
+ #      workdir: /projects/postit-app/node-frontend/
 
 
   - name: oc - create quarkus-backend NATIVE + node-frontend

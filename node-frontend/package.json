@@ -12,8 +12,10 @@
     "react-markdown": "~4.2.2",
     "react-scripts": "3.1.1"
   },
+  "proxy": "http://localhost:8080",
   "scripts": {
     "start": "node index.js",
+    "devmode": "react-scripts start",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "install": "react-scripts build"
