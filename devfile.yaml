@@ -166,48 +166,47 @@ commands:
  #      workdir: /projects/postit-app/node-frontend/
 
 
-  - name: oc - create quarkus-backend NATIVE + node-frontend
+  - name: oc - deploy app (quarkus NATIVE) from github
     actions:
       - type: exec
         command: |-
                   # mongodb
-                  oc new-app -e MONGODB_USER=user -e MONGODB_PASSWORD=password -e MONGODB_DATABASE=quarkus -e MONGODB_ADMIN_PASSWORD=password centos/mongodb-34-centos7 --name=mongo
+                  oc new-app -e MONGODB_USER=user -e MONGODB_PASSWORD=password -e MONGODB_DATABASE=sampledb -e MONGODB_ADMIN_PASSWORD=password centos/mongodb-36-centos7 --name=mongo
                   # s2i quarkus app from source
                   oc new-app quay.io/quarkus/ubi-quarkus-native-s2i:19.2.1~https://github.com/redhat-developer-demos/quarkus-reactjs-postit-app --name=quarkus-backend --context-dir=quarkus-backend -e QUARKUS_MONGODB_CONNECTION_STRING=mongodb://admin:password@mongo
                   oc cancel-build bc/quarkus-backend
                   oc patch bc/quarkus-backend -p '{"spec":{"resources":{"limits":{"cpu":"6", "memory":"6Gi"}}}}'
                   oc start-build quarkus-backend
                   oc expose svc/quarkus-backend
-                  oc logs -f bc/quarkus-backend
-                  export REACT_APP_BACKEND_HOST=http://$(oc get route quarkus-backend --template='{{ .spec.host }}')
                   # s2i node frontend from source
-                  oc new-app nodejs~https://github.com/redhat-developer-demos/quarkus-reactjs-postit-app --context-dir=node-frontend --name=node-frontend -e PORT=8080 -e REACT_APP_BACKEND_HOST=$REACT_APP_BACKEND_HOST
+                  oc new-app nodejs~https://github.com/redhat-developer-demos/quarkus-reactjs-postit-app --context-dir=node-frontend --name=node-frontend -e PORT=8080 -e COMPONENT_QUARKUS_BACKEND_HOST=quarkus-backend
                   oc expose svc/node-frontend
+                  oc logs -f bc/quarkus-backend
                   oc logs -f bc/node-frontend
                   echo node-frontend url http://$(oc get route node-frontend --template='{{ .spec.host }}')
         component: vscode-openshift
         workdir: /projects/postit-app/node-frontend/
 
-  - name: oc - create quarkus-backend JVM + node-frontend
+  - name: oc - deploy app (quarkus JVM) from github
     actions:
       - type: exec
         command: |-
                   # mongodb
-                  oc new-app -e MONGODB_USER=user -e MONGODB_PASSWORD=password -e MONGODB_DATABASE=quarkus -e MONGODB_ADMIN_PASSWORD=password centos/mongodb-34-centos7 --name=mongo
+                  oc new-app -e MONGODB_USER=user -e MONGODB_PASSWORD=password -e MONGODB_DATABASE=sampledb -e MONGODB_ADMIN_PASSWORD=password centos/mongodb-36-centos7 --name=mongo
                   # s2i quarkus app from source
-                  oc new-app java~https://github.com/redhat-developer-demos/quarkus-reactjs-postit-app --name=quarkus-backend --context-dir=quarkus-backend -e QUARKUS_MONGODB_CONNECTION_STRING=mongodb://admin:password@mongo --env=JAVA_OPTIONS="-Dquarkus.http.host=0.0.0.0"  --env=JAVA_APP_JAR="quarkus-backend-1.0.0-SNAPSHOT-runner.jar"
+                  oc new-app java~https://github.com/redhat-developer-demos/quarkus-reactjs-postit-app --name=quarkus-backend --context-dir=quarkus-backend -e uri=mongodb://mongo -e username=user -e password=password --env=JAVA_OPTIONS="-Dquarkus.http.host=0.0.0.0"
                   oc expose svc/quarkus-backend
                   oc logs -f bc/quarkus-backend
-                  export REACT_APP_BACKEND_HOST=http://$(oc get route quarkus-backend --template='{{ .spec.host }}')
                   # s2i node frontend from source
-                  oc new-app nodejs~https://github.com/redhat-developer-demos/quarkus-reactjs-postit-app --context-dir=node-frontend --name=node-frontend -e PORT=8080 -e REACT_APP_BACKEND_HOST=$REACT_APP_BACKEND_HOST
+                  oc new-app nodejs~https://github.com/redhat-developer-demos/quarkus-reactjs-postit-app --context-dir=node-frontend --name=node-frontend -e PORT=8080 -e COMPONENT_QUARKUS_BACKEND_HOST=quarkus-backend
                   oc expose svc/node-frontend
+                  oc logs -f bc/quarkus-backend
                   oc logs -f bc/node-frontend
                   echo node-frontend url http://$(oc get route node-frontend --template='{{ .spec.host }}')
         component: vscode-openshift
         workdir: /projects/postit-app/node-frontend/
 
-  - name: oc - rebuild quarkus-backend from local source
+  - name: oc - redeploy quarkus-backend from local source
     actions:
       - type: exec
         command: |-
@@ -217,7 +216,7 @@ commands:
         workdir: /projects/postit-app/
 
 
-  - name: oc - rebuild node-frontend from local source
+  - name: oc - redeploy node-frontend from local source
     actions:
       - type: exec
         command: |-
