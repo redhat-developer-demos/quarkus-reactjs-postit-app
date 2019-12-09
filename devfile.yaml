@@ -174,13 +174,16 @@ commands:
                   oc new-app -e MONGODB_USER=user -e MONGODB_PASSWORD=password -e MONGODB_DATABASE=sampledb -e MONGODB_ADMIN_PASSWORD=password centos/mongodb-36-centos7 --name=mongo
                   # s2i quarkus app from source
                   oc new-app quay.io/quarkus/ubi-quarkus-native-s2i:19.2.1~https://github.com/redhat-developer-demos/quarkus-reactjs-postit-app --name=quarkus-backend --context-dir=quarkus-backend -e QUARKUS_MONGODB_CONNECTION_STRING=mongodb://admin:password@mongo
+                  # s2i node frontend from source
+                  oc new-app nodejs~https://github.com/redhat-developer-demos/quarkus-reactjs-postit-app --context-dir=node-frontend --name=node-frontend -e PORT=8080 -e COMPONENT_QUARKUS_BACKEND_HOST=quarkus-backend
+                  oc expose svc/node-frontend
+                  # reconfigure build
+                  sleep 10
                   oc cancel-build bc/quarkus-backend
                   oc patch bc/quarkus-backend -p '{"spec":{"resources":{"limits":{"cpu":"6", "memory":"6Gi"}}}}'
                   oc start-build quarkus-backend
                   oc expose svc/quarkus-backend
-                  # s2i node frontend from source
-                  oc new-app nodejs~https://github.com/redhat-developer-demos/quarkus-reactjs-postit-app --context-dir=node-frontend --name=node-frontend -e PORT=8080 -e COMPONENT_QUARKUS_BACKEND_HOST=quarkus-backend
-                  oc expose svc/node-frontend
+                  # logs
                   oc logs -f bc/quarkus-backend
                   oc logs -f bc/node-frontend
                   echo node-frontend url http://$(oc get route node-frontend --template='{{ .spec.host }}')
