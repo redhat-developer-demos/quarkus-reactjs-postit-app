@@ -196,7 +196,6 @@ commands:
                   # s2i quarkus app from source
                   oc new-app java~https://github.com/redhat-developer-demos/quarkus-reactjs-postit-app --name=quarkus-backend --context-dir=quarkus-backend -e uri=mongodb://mongo -e username=user -e password=password --env=JAVA_OPTIONS="-Dquarkus.http.host=0.0.0.0"
                   oc expose svc/quarkus-backend
-                  oc logs -f bc/quarkus-backend
                   # s2i node frontend from source
                   oc new-app nodejs~https://github.com/redhat-developer-demos/quarkus-reactjs-postit-app --context-dir=node-frontend --name=node-frontend -e PORT=8080 -e COMPONENT_QUARKUS_BACKEND_HOST=quarkus-backend
                   oc expose svc/node-frontend
