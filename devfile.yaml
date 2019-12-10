@@ -217,7 +217,7 @@ commands:
         component: vscode-openshift
         workdir: /projects/postit-app/node-frontend/
 
-  - name: oc - redeploy quarkus-backend from local source
+  - name: oc - redeploy quarkus-backend (from local sources)
     actions:
       - type: exec
         command: |-
@@ -227,7 +227,7 @@ commands:
         workdir: /projects/postit-app/
 
 
-  - name: oc - redeploy node-frontend from local source
+  - name: oc - redeploy node-frontend (from local sources)
     actions:
       - type: exec
         command: |-
@@ -239,19 +239,23 @@ commands:
 
 
 
-  - name: oc - scale node-frontend to 10 replicas
+  - name: oc - scale node-frontend
     actions:
       - type: exec
         command: |-
-                  oc scale dc/node-frontend --replicas=10
+                  echo "Scale node-frontend. Enter the number of desired replicas:";
+                  read replicas;
+                  oc scale dc/node-frontend --replicas=${replicas}
         component: vscode-openshift
         workdir: /projects/postit-app/
 
-  - name: oc - scale node-frontend to 1 replica
+  - name: oc - scale quarkus-backend
     actions:
       - type: exec
         command: |-
-                  oc scale dc/node-frontend --replicas=1
+                  echo "Scale quarkus-frontend. Enter the number of desired replicas:";
+                  read replicas;
+                  oc scale dc/quarkus-backend --replicas=${replicas}
         component: vscode-openshift
         workdir: /projects/postit-app/
 
