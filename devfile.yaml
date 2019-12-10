@@ -19,7 +19,7 @@ components:
 
   - alias: quarkus-backend-dev
     type: dockerimage
-    image: quay.io/quarkus/centos-quarkus-maven:19.2.1
+    image: quay.io/quarkus/centos-quarkus-maven:19.3.0-java11
     memoryLimit: 5Gi
     command: ['sleep']
     args: ['infinity']
@@ -61,6 +61,15 @@ components:
     endpoints:
       - name: '8080/tcp'
         port: 8080
+    env:
+      - name: username
+        value: 'user'
+      - name: password
+        value: 'password'
+      - name: admin_password
+        value: 'password'
+      - name: uri
+        value: 'mongodb://localhost'
 
   - alias: mongo
     type: dockerimage
