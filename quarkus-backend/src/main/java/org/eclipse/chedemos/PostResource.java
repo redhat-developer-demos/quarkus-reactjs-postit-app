@@ -15,16 +15,11 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.google.common.base.Strings;
-
-import org.jboss.logging.Logger;
-
 
 @Path("/posts")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class PostResource {
-  private static final Logger LOG = Logger.getLogger(PostResource.class);
 
   public PostResource() {
   }
