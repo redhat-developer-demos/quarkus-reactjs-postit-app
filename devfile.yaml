@@ -19,7 +19,7 @@ components:
 
   - alias: quarkus-backend-dev
     type: dockerimage
-    image: quay.io/quarkus/centos-quarkus-maven:19.3.0-java11
+    image: quay.io/quarkus/centos-quarkus-maven:19.2.1
     memoryLimit: 5Gi
     command: ['sleep']
     args: ['infinity']
