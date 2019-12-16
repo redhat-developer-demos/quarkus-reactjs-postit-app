@@ -167,12 +167,12 @@ commands:
         component: node-frontend-dev
         workdir: /projects/postit-app/node-frontend/
 
- #- name: start PROD node-frontend
- #  actions:
- #    - type: exec
- #      command: node index.js
- #      component: node-frontend-dev
- #      workdir: /projects/postit-app/node-frontend/
+  - name: start PROD node-frontend
+    actions:
+      - type: exec
+        command: npm start
+        component: node-frontend-dev
+        workdir: /projects/postit-app/node-frontend/
 
 
   - name: oc - deploy app (quarkus NATIVE) from github
