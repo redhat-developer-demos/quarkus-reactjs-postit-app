@@ -43,7 +43,7 @@ commands:
         command:  |-
                     mkdir -p /projects/local/m2repo;
                     rm /projects/local/m2repo/* -rf ;
-                    mvn dependency:go-offline
+                    mvn package;
         component: quarkus-backend-dev
         workdir: /projects/postit-app/quarkus-backend
 
