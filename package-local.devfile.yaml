@@ -18,6 +18,9 @@ components:
     command: ['sleep']
     args: ['infinity']
     mountSources: true
+    env:
+      - name: MAVEN_OPTS
+        value: '-Dmaven.repo.local=/projects/local/m2repo'
 
   - alias: node-frontend-dev
     mountSources: true
