@@ -32,7 +32,7 @@ components:
     type: dockerimage
     image: sunix/git-devtools
     mountSources: true
-    memoryLimit: 64M
+    memoryLimit: 512M
     args: ['sleep', 'infinity']
 
 commands:

@@ -11,7 +11,7 @@ projects:
 
   - source:
       type: zip
-      location: 'https://github.com/sunix/che-quarkus-demo/releases/download/20191113-repo/local.zip'
+      location: 'https://github.com/redhat-developer-demos/quarkus-reactjs-postit-app/releases/download/20191216-local/local.zip'
     name: local
 
 
