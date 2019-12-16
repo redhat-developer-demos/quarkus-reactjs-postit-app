@@ -1,0 +1,69 @@
+apiVersion: 1.0.0
+metadata:
+  generateName: package-local-postit-app-
+
+projects:
+
+  - source:
+      type: git
+      location: 'https://github.com/redhat-developer-demos/quarkus-reactjs-postit-app'
+    name: postit-app
+
+components:
+
+  - alias: quarkus-backend-dev
+    type: dockerimage
+    image: quay.io/quarkus/centos-quarkus-maven:19.2.1
+    memoryLimit: 1Gi
+    command: ['sleep']
+    args: ['infinity']
+    mountSources: true
+
+  - alias: node-frontend-dev
+    mountSources: true
+    image: 'quay.io/eclipse/che-nodejs8-centos:7.2.0'
+    memoryLimit: 768Mi
+    type: dockerimage
+
+  - alias: git
+    type: dockerimage
+    image: sunix/git-devtools
+    mountSources: true
+    memoryLimit: 64M
+    args: ['sleep', 'infinity']
+
+commands:
+
+  - name: prepare local quarkus-backend
+    actions:
+      - type: exec
+        command:  |-
+                    mkdir -p /projects/local/m2repo;
+                    rm /projects/local/m2repo/* -rf ;
+                    mvn dependency:go-offline
+        component: quarkus-backend-dev
+        workdir: /projects/postit-app/quarkus-backend
+
+
+  - name: prepare local node_modules
+    actions:
+      - type: exec
+        command: |-
+                  mkdir -p /projects/local;
+                  rm /projects/local/node_modules.tar.gz -rf;
+                  rm /projects/postit-app/node-frontend/node_modules -rf;
+                  npm install;
+                  tar -zcvf /projects/local/node_modules.tar.gz node_modules;
+        component: node-frontend-dev
+        workdir: /projects/postit-app/node-frontend/
+
+
+
+  - name: zip everything
+    actions:
+      - type: exec
+        command: |-
+                  rm local.zip;
+                  zip -r local.zip *;
+        component: git
+        workdir: /projects/local/
