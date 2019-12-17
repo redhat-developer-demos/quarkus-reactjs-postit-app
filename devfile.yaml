@@ -88,10 +88,9 @@ components:
      - name: mongo-storage
        containerPath: /var/lib/mongodb/data
 
-  - alias: java
+  - alias: quarkus-java
     type: chePlugin
-    id: redhat/java/latest
-    memoryLimit: 1536M
+    reference: https://raw.githubusercontent.com/sunix/che-plugin-registry/master/v3/plugins/redhat/quarkus-java11/1.1.1/meta.yaml
 
   - id: redhat/vscode-openshift-connector/latest
     type: chePlugin
