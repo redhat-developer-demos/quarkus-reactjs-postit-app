@@ -186,8 +186,17 @@ commands:
                   # s2i node frontend from source
                   oc new-app nodejs~https://github.com/redhat-developer-demos/quarkus-reactjs-postit-app --context-dir=node-frontend --name=node-frontend -e PORT=8080 -e COMPONENT_QUARKUS_BACKEND_HOST=quarkus-backend
                   oc expose svc/node-frontend
-                  # reconfigure build
-                  sleep 10;
+                  # quarkus native build need more cpu and memory
+                  # wait for quakus-backend build to start and cancel it to reconfigure it
+                  for i in 1 2 3 4 5 6 7 8 9; do
+                    pods="$(oc get build -o go-template='{{range .items}}{{$bc := index .metadata.annotations "openshift.io/build-config.name"}}{{$status := index .status.phase}}{{if eq $bc "quarkus-backend"}}{{if eq $status "Running"}}{{.metadata.name}}{{"\t"}}{{.status.phase}}{{"\n"}}{{end}}{{end}}{{end}}')";
+                    echo $pods;
+                    if [ -n "$pods" ]; then
+                      break;
+                    fi
+                    echo "Waiting for quarkus-backend build to be ready...";
+                    sleep "2";
+                  done
                   oc cancel-build bc/quarkus-backend
                   oc patch bc/quarkus-backend -p '{"spec":{"resources":{"limits":{"cpu":"6", "memory":"6Gi"}}}}'
                   oc start-build quarkus-backend
