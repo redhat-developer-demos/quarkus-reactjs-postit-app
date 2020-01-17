@@ -187,15 +187,7 @@ commands:
                   oc new-app nodejs~https://github.com/redhat-developer-demos/quarkus-reactjs-postit-app --context-dir=node-frontend --name=node-frontend -e PORT=8080 -e COMPONENT_QUARKUS_BACKEND_HOST=quarkus-backend
                   oc expose svc/node-frontend
                   # reconfigure build
-                  for ((i=0; i<20; i+=1)); do
-                    pods="$(oc get build -o go-template='{{range .items}}{{$bc := index .metadata.annotations "openshift.io/build-config.name"}}{{$status := index .status.phase}}{{if eq $bc "quarkus-backend"}}{{if eq $status "Running"}}{{.metadata.name}}{{"\t"}}{{.status.phase}}{{"\n"}}{{end}}{{end}}{{end}}')"
-                    echo $pods;
-                    if [ -n "$pods" ]; then
-                      break;
-                    fi
-                    echo "Waiting for quarkus-backend build to be ready..."
-                    sleep "1"
-                  done
+                  sleep 10;
                   oc cancel-build bc/quarkus-backend
                   oc patch bc/quarkus-backend -p '{"spec":{"resources":{"limits":{"cpu":"6", "memory":"6Gi"}}}}'
                   oc start-build quarkus-backend
