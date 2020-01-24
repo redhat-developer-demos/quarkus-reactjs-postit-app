@@ -24,7 +24,7 @@ public class Post extends PanacheMongoEntity {
     }
 
     public String getTitle() {
-        return title;
+        return title.toUpperCase();
     }
 
     public String getContent() {
