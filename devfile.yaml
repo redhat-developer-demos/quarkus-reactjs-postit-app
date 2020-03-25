@@ -21,6 +21,7 @@ components:
     type: dockerimage
     image: quay.io/quarkus/centos-quarkus-maven:19.2.1
     memoryLimit: 5Gi
+    cpuLimit: 2
     command: ['sleep']
     args: ['infinity']
     mountSources: true
@@ -55,6 +56,7 @@ components:
     type: dockerimage
     image: quay.io/quarkus/ubi-quarkus-native-image:19.2.0.1
     memoryLimit: 32M
+    cpuLimit: 0.2
     mountSources: true
     command: ['tail']
     args: ['-f', '/dev/null']
@@ -75,6 +77,7 @@ components:
     type: dockerimage
     image: centos/mongodb-34-centos7
     memoryLimit: 512Mi
+    cpuLimit: 0.2
     env:
      - name: MONGODB_USER
        value: user
@@ -92,11 +95,12 @@ components:
     type: chePlugin
     id: redhat/java/latest
     memoryLimit: 1536M
+    cpuLimit: 1
 
   - id: redhat/vscode-openshift-connector/latest
     type: chePlugin
     alias: vscode-openshift
-
+    cpuLimit: 0.2
 
 
   - alias: git
@@ -105,7 +109,7 @@ components:
     mountSources: true
     memoryLimit: 64M
     args: ['sleep', 'infinity']
-
+    cpuLimit: 0.2
 commands:
 
   - name: start DEVMODE quarkus-backend
