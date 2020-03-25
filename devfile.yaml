@@ -36,7 +36,7 @@ components:
       - name: uri
         value: 'mongodb://localhost'
     endpoints:
-      - name: 'quarkus/dev'
+      - name: 'quarkus-dev'
         port: 8080
 
   - alias: node-frontend-dev
@@ -45,7 +45,7 @@ components:
     memoryLimit: 768Mi
     type: dockerimage
     endpoints:
-      - name: '3000/tcp'
+      - name: '3000-tcp'
         port: 3000
     env:
       - name: FRONTEND_PORT
@@ -59,7 +59,7 @@ components:
     command: ['tail']
     args: ['-f', '/dev/null']
     endpoints:
-      - name: '8080/tcp'
+      - name: '8080-tcp'
         port: 8080
     env:
       - name: username
