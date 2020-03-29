@@ -21,6 +21,7 @@ components:
     type: dockerimage
     image: quay.io/quarkus/centos-quarkus-maven:19.2.1
     memoryLimit: 5Gi
+    cpuLimit: 2
     command: ['sleep']
     args: ['infinity']
     mountSources: true
@@ -43,6 +44,7 @@ components:
     mountSources: true
     image: 'quay.io/eclipse/che-nodejs8-centos:7.2.0'
     memoryLimit: 768Mi
+    cpuLimit: '500m'
     type: dockerimage
     endpoints:
       - name: '3000-tcp'
@@ -55,6 +57,7 @@ components:
     type: dockerimage
     image: quay.io/quarkus/ubi-quarkus-native-image:19.2.0.1
     memoryLimit: 32M
+    cpuLimit: '100m'
     mountSources: true
     command: ['tail']
     args: ['-f', '/dev/null']
