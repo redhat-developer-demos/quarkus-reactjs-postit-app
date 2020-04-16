@@ -9,11 +9,6 @@ projects:
       location: 'https://github.com/redhat-developer-demos/quarkus-reactjs-postit-app'
     name: postit-app
 
-  - source:
-      type: zip
-      location: 'https://github.com/redhat-developer-demos/quarkus-reactjs-postit-app/releases/download/20191216-local/local.zip'
-    name: local
-
 
 components:
 
@@ -26,7 +21,7 @@ components:
     mountSources: true
     env:
       - name: MAVEN_OPTS
-        value: '-Dmaven.repo.local=/projects/local/m2repo'
+        value: '-Dmaven.repo.local=/.m2/repository'
       - name: username
         value: 'user'
       - name: password
@@ -38,6 +33,18 @@ components:
     endpoints:
       - name: 'quarkus-dev'
         port: 8080
+    volumes:
+      - name: .m2
+        containerPath: /.m2
+
+  - mountSources: true
+    memoryLimit: 64M
+    type: dockerimage
+    image: quay.io/sunix/postit-app-dev-data
+    alias: data
+    volumes:
+      - name: .m2
+        containerPath: /work/volumes/.m2
 
   - alias: node-frontend-dev
     mountSources: true
@@ -88,15 +95,12 @@ components:
      - name: mongo-storage
        containerPath: /var/lib/mongodb/data
 
-  - alias: java
+  - id: redhat/quarkus-java11/latest
     type: chePlugin
-    id: redhat/java/latest
-    memoryLimit: 1536M
 
   - id: redhat/vscode-openshift-connector/latest
     type: chePlugin
     alias: vscode-openshift
-
 
 
   - alias: git
@@ -163,7 +167,7 @@ commands:
   - name: start DEVMODE node-frontend
     actions:
       - type: exec
-        command: tar zxvf /projects/local/node_modules.tar.gz ; rm /projects/local/node_modules.tar.gz ; npm run devmode
+        command: npm run devmode
         component: node-frontend-dev
         workdir: /projects/postit-app/node-frontend/
 
