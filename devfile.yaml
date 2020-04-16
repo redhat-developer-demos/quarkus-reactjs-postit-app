@@ -91,9 +91,6 @@ components:
        value: sampledb
      - name: MONGODB_ADMIN_PASSWORD
        value: password
-    volumes:
-     - name: mongo-storage
-       containerPath: /var/lib/mongodb/data
 
   - id: redhat/quarkus-java11/latest
     type: chePlugin
