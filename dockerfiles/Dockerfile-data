@@ -6,15 +6,15 @@ RUN env && \
     mvn dependency:go-offline -Dnative
 
 FROM quay.io/eclipse/che-nodejs8-centos:nightly as node-frontend-dev
-COPY --chown=10001:10001 node-frontend /node-frontend
-WORKDIR /node-frontend
+COPY --chown=10001:10001 node-frontend /projects/postit-app/node-frontend
+WORKDIR /projects/postit-app/node-frontend
 RUN env && \
     npm install && \
-    npm install react-scripts
+    tar zcvf node_modules.tar.gz node_modules
 
-FROM registry.access.redhat.com/ubi8/ubi-minimal
+FROM registry.access.redhat.com/ubi8/ubi
 COPY --from=quarkus-dev /home/quarkus/.m2/repository /work/m2repo
-COPY --from=node-frontend-dev /node-frontend/node_modules /work/node_modules
+COPY --from=node-frontend-dev /projects/postit-app/node-frontend/node_modules.tar.gz /work/node_modules.tar.gz
 COPY dockerfiles/data-copy.sh /data-copy.sh
 RUN  chmod 775 /data-copy.sh
 CMD ["/data-copy.sh"]

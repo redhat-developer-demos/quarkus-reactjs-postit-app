@@ -11,7 +11,8 @@ if [ ! -d /projects/postit-app/node-frontend/node_modules ]; then
   done
   sleep 5;
   echo 'copying /work/node_modules/* to /projects/postit-app/node-frontend/node_modules';
-  cp -rf /work/node_modules /projects/postit-app/node-frontend/;
+  cd /projects/postit-app/node-frontend/;
+  tar -zxvf /work/node_modules.tar.gz
 fi
 sleep infinity
 
