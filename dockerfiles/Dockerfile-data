@@ -9,7 +9,8 @@ FROM quay.io/eclipse/che-nodejs8-centos:nightly as node-frontend-dev
 COPY --chown=10001:10001 node-frontend /node-frontend
 WORKDIR /node-frontend
 RUN env && \
-    npm install
+    npm install && \
+    npm install react-scripts
 
 FROM registry.access.redhat.com/ubi8/ubi-minimal
 COPY --from=quarkus-dev /home/quarkus/.m2/repository /work/m2repo
