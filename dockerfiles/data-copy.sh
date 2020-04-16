@@ -9,9 +9,9 @@ if [ ! -d /projects/postit-app/node-frontend/node_modules ]; then
     echo '/projects/postit-app/node-frontend folder not created yet ...retry in 1sec';
     sleep 1;
   done
+  sleep 5;
   echo 'copying /work/node_modules/* to /projects/postit-app/node-frontend/node_modules';
-  mkdir -p /projects/postit-app/node-frontend/node_modules;
-  cp -rf /work/node_modules/* /projects/postit-app/node-frontend/node_modules;
+  cp -rf /work/node_modules /projects/postit-app/node-frontend/;
 fi
 sleep infinity
 
