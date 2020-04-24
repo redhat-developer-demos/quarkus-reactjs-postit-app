@@ -42,7 +42,7 @@ class PostList extends React.Component {
       return <div> waiting </div>
     } else {
       return this.state.posts.map((post) =>
-        <Post title={post.title} content={post.content} timestamp={post.timestamp} key={post.timestamp}/>
+        <Post id={post.id} title={post.title} content={post.content} timestamp={post.timestamp} key={post.timestamp}/>
       )
     }
   }

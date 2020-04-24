@@ -10,6 +10,7 @@ class Post extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      id: this.props.id,
       title: this.props.title,
       content: this.props.content,
       timestamp: this.props.timestamp,
