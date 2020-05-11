@@ -34,7 +34,7 @@ components:
       - name: 'quarkus-dev'
         port: 8080
     volumes:
-      - name: .m2
+      - name: m2
         containerPath: /.m2
 
   - mountSources: true
@@ -43,7 +43,7 @@ components:
     image: quay.io/sunix/postit-app-dev-data
     alias: data
     volumes:
-      - name: .m2
+      - name: m2
         containerPath: /work/volumes/.m2
 
   - alias: node-frontend-dev
