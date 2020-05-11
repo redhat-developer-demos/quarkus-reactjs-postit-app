@@ -7,7 +7,7 @@ A Cloud ready Post it app composed of
 
 To run this demo:
 1. Fork this repo and modify the following button changing the URL on this README.md file:
-2. Start the workspace: [![Contribute](https://che.openshift.io/factory/resources/factory-contribute.svg)](https://blog.sunix.org/factory?url=https://github.com/redhat-developer-demos/quarkus-reactjs-postit-app/raw/master/che-devfile.yaml)
+2. Start the workspace: [![Contribute](https://che.openshift.io/factory/resources/factory-contribute.svg)](https://blog.sunix.org/factory?url=https://github.com/redhat-developer-demos/quarkus-reactjs-postit-app/raw/384e67f2b9263697a49160aa0db91841c4489d21/che-devfile.yaml)
 
 The URL should use your instance of Che/CodeReady Workspaces:
 
