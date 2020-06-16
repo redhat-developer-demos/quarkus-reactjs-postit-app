@@ -202,6 +202,10 @@ commands:
                   oc patch bc/quarkus-backend -p '{"spec":{"resources":{"limits":{"cpu":"6", "memory":"6Gi"}}}}'
                   oc start-build quarkus-backend
                   oc expose svc/quarkus-backend
+                  # labels
+                  oc label dc mongo app.openshift.io/runtime=mongodb
+                  oc label dc node-frontend app.openshift.io/runtime=nodejs
+                  oc label dc quarkus-backend app.openshift.io/runtime=java
                   # logs
                   oc logs -f bc/quarkus-backend
                   oc logs -f bc/node-frontend
@@ -221,6 +225,11 @@ commands:
                   # s2i node frontend from source
                   oc new-app nodejs~https://github.com/redhat-developer-demos/quarkus-reactjs-postit-app --context-dir=node-frontend --name=node-frontend -e PORT=8080 -e COMPONENT_QUARKUS_BACKEND_HOST=quarkus-backend
                   oc expose svc/node-frontend
+                  # labels
+                  oc label dc mongo app.openshift.io/runtime=mongodb
+                  oc label dc node-frontend app.openshift.io/runtime=nodejs
+                  oc label dc quarkus-backend app.openshift.io/runtime=java
+                  # logs
                   oc logs -f bc/quarkus-backend
                   oc logs -f bc/node-frontend
                   echo node-frontend url http://$(oc get route node-frontend --template='{{ .spec.host }}')
