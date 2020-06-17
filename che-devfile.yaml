@@ -92,10 +92,10 @@ components:
      - name: MONGODB_ADMIN_PASSWORD
        value: password
 
-  - reference: 'https://github.com/eclipse/che-plugin-registry/raw/master/v3/plugins/redhat/quarkus-java11/1.3.0/meta.yaml'
+  - id: redhat/quarkus-java11/latest
     type: chePlugin
 
-  - id: redhat/vscode-openshift-connector/latest
+  - id: redhat/vscode-openshift-connector/0.1.2
     type: chePlugin
     alias: vscode-openshift
 
