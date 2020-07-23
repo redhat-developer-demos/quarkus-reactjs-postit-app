@@ -289,3 +289,12 @@ commands:
                   rm oc; curl https://mirror.openshift.com/pub/openshift-v4/clients/oc/latest/linux/oc.tar.gz -s | tar zxv && ./oc login --server=${KUBERNETES_SERVICE_HOST}:443
         component: vscode-openshift
         workdir: /tmp
+
+  - name: show posts
+    actions:
+      - workdir: /tmp
+        type: exec
+        command: >-
+          mongo mongodb://user:password@localhost/sampledb --eval
+          "printjson(db.getCollection('Posts').find().toArray())"
+        component: mongo
