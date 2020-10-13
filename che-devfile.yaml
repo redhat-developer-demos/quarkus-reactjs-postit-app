@@ -137,22 +137,22 @@ commands:
         component: quarkus-backend-native-prod
         workdir: /projects/postit-app/quarkus-backend/target
 
-  - name: connect java debugger quarkus-backend
+  - name: Attach remote debugger
     actions:
-      - type: vscode-launch
-        referenceContent: |
+      - referenceContent: |
           {
-          "version": "0.2.0",
-          "configurations": [
-            {
-              "type": "java",
-              "name": "Debug (Attach) - Remote",
-              "request": "attach",
-              "hostName": "localhost",
-              "port": 5005
-            }]
+            "version": "0.2.0",
+            "configurations": [
+              {
+                "type": "java",
+                "request": "attach",
+                "name": "Attach to Remote Quarkus App",
+                "hostName": "localhost",
+                "port": 5005
+              }
+            ]
           }
-
+        type: vscode-launch
 
  # - name: build PROD node-frontend
  #   actions:
