@@ -127,7 +127,7 @@ commands:
   - name: build NATIVE quarkus-backend
     actions:
       - type: exec
-        command: pkill java; mvn package -Pnative
+        command: "pkill java; mvn package -Dnative -Dmaven.test.skip -Dquarkus.native.native-image-xmx=2G"
         component: quarkus-backend-dev
         workdir: /projects/postit-app/quarkus-backend
 
@@ -204,9 +204,9 @@ commands:
                   oc start-build quarkus-backend
                   oc expose svc/quarkus-backend
                   # labels
-                  oc label dc mongo app.openshift.io/runtime=mongodb
-                  oc label dc node-frontend app.openshift.io/runtime=nodejs
-                  oc label dc quarkus-backend app.openshift.io/runtime=java
+                  oc label deployment mongo app.openshift.io/runtime=mongodb
+                  oc label deployment node-frontend app.openshift.io/runtime=nodejs
+                  oc label deployment quarkus-backend app.openshift.io/runtime=quarkus
                   # logs
                   oc logs -f bc/quarkus-backend
                   oc logs -f bc/node-frontend
@@ -227,9 +227,9 @@ commands:
                   oc new-app nodejs~https://github.com/redhat-developer-demos/quarkus-reactjs-postit-app --context-dir=node-frontend --name=node-frontend -e PORT=8080 -e COMPONENT_QUARKUS_BACKEND_HOST=quarkus-backend
                   oc expose svc/node-frontend
                   # labels
-                  oc label dc mongo app.openshift.io/runtime=mongodb
-                  oc label dc node-frontend app.openshift.io/runtime=nodejs
-                  oc label dc quarkus-backend app.openshift.io/runtime=java
+                  oc label deployment mongo app.openshift.io/runtime=mongodb
+                  oc label deployment node-frontend app.openshift.io/runtime=nodejs
+                  oc label deployment quarkus-backend app.openshift.io/runtime=quarkus
                   # logs
                   oc logs -f bc/quarkus-backend
                   oc logs -f bc/node-frontend
