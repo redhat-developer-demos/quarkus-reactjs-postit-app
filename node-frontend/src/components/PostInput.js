@@ -35,11 +35,7 @@ class PostInput extends React.Component {
 
   handleSubmit(event) {
     var now = Date.now();
-    var backendHost = process.env.REACT_APP_BACKEND_HOST;
-    if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-        backendHost = '';
-    }
-    fetch(`${backendHost}/posts`, {
+    fetch('posts', {
         method: 'POST',
         body: JSON.stringify(Object.assign({}, this.state.post, {timestamp: now})),
         headers: {

@@ -22,17 +22,17 @@ class Post extends React.Component {
       <Container className="post">
         <Row className="post-title">
           <Col>
-            {this.props.title}
+            {this.state.title}
           </Col>
         </Row>
         <Row className="post-content">
           <Col>
-            <ReactMarkdown source={this.props.content}/>
+            <ReactMarkdown source={this.state.content}/>
           </Col>
         </Row>
         <Row className="post-footer justify-content-between">
           <Col className="post-time">
-            {this.getDate(this.props.timestamp)}
+            {this.getDate(this.state.timestamp)}
           </Col>
           <Col className="delete-post-button" sm={1}>
             <Button variant="danger" type="submit" onClick={this.deletePost}>
@@ -49,11 +49,7 @@ class Post extends React.Component {
   }
 
   deletePost() {
-    var backendHost = process.env.REACT_APP_BACKEND_HOST;
-    if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-        backendHost = '';
-    }
-    fetch(`${backendHost}/posts`, {
+    fetch('posts', {
       method: 'DELETE',
       body: JSON.stringify(this.state),
       headers: {

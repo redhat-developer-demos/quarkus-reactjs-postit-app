@@ -12,11 +12,7 @@ class PostList extends React.Component {
   }
 
   componentDidMount() {
-    var backendHost = process.env.REACT_APP_BACKEND_HOST;
-    if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-        backendHost = '';
-    }
-    fetch(`${backendHost}/posts`)
+    fetch('posts')
       .then(response => response.json())
       .then(data => this.updatePosts(data))
   }
