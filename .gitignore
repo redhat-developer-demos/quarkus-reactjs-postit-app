@@ -37,3 +37,6 @@ buildNumber.properties
 .project
 .classpath
 .settings
+
+node-frontend/build
+node-frontend/node_modules
