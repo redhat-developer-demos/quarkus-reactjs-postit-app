@@ -14,7 +14,7 @@ components:
 
   - alias: quarkus-backend-dev
     type: dockerimage
-    image: quay.io/quarkus/centos-quarkus-maven:20.0.0-java8
+    image: quay.io/quarkus/centos-quarkus-maven:20.1.0-java11
     memoryLimit: 4Gi
     command: ['sleep']
     args: ['infinity']
@@ -48,7 +48,7 @@ components:
 
   - alias: node-frontend-dev
     mountSources: true
-    image: 'quay.io/eclipse/che-nodejs8-centos:7.2.0'
+    image: 'quay.io/eclipse/che-nodejs12-community:nightly'
     memoryLimit: 768Mi
     type: dockerimage
     endpoints:
@@ -100,6 +100,8 @@ components:
     type: chePlugin
     alias: vscode-openshift
 
+  - id: che-incubator/typescript/latest
+    type: chePlugin
 
   - alias: git
     type: dockerimage
