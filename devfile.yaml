@@ -2,13 +2,6 @@ apiVersion: 1.0.0
 metadata:
   generateName: postit-app-
 
-projects:
-
-  - source:
-      type: git
-      location: 'https://github.com/redhat-developer-demos/quarkus-reactjs-postit-app'
-    name: postit-app
-
 
 components:
 
@@ -117,28 +110,28 @@ commands:
       - type: exec
         command: pkill java; mvn compile quarkus:dev
         component: quarkus-backend-dev
-        workdir: /projects/postit-app/quarkus-backend
+        workdir: /projects/quarkus-reactjs-postit-app/quarkus-backend
 
 #  - name: build JVM quarkus-backend
 #    actions:
 #      - type: exec
 #        command: pkill java; mvn package
 #        component: quarkus-backend-dev
-#        workdir: /projects/postit-app/quarkus-backend
+#        workdir: /projects/quarkus-reactjs-postit-app/quarkus-backend
 
   - name: build NATIVE quarkus-backend
     actions:
       - type: exec
         command: "pkill java; mvn package -Dnative -Dmaven.test.skip -Dquarkus.native.native-image-xmx=2G"
         component: quarkus-backend-dev
-        workdir: /projects/postit-app/quarkus-backend
+        workdir: /projects/quarkus-reactjs-postit-app/quarkus-backend
 
   - name: start NATIVE quarkus-backend
     actions:
       - type: exec
         command: ./quarkus-backend-1.0.0-SNAPSHOT-runner -Dquarkus.http.host=0.0.0.0
         component: quarkus-backend-native-prod
-        workdir: /projects/postit-app/quarkus-backend/target
+        workdir: /projects/quarkus-reactjs-postit-app/quarkus-backend/target
 
   - name: connect java debugger quarkus-backend
     actions:
@@ -162,21 +155,21 @@ commands:
  #    - type: exec
  #      command: tar zxvf /projects/local/node_modules.tar.gz ; rm /projects/local/node_modules.tar.gz  ; npm install
  #      component: node-frontend-dev
- #      workdir: /projects/postit-app/node-frontend/
+ #      workdir: /projects/quarkus-reactjs-postit-app/node-frontend/
 
   - name: start DEVMODE node-frontend
     actions:
       - type: exec
         command: npm run devmode
         component: node-frontend-dev
-        workdir: /projects/postit-app/node-frontend/
+        workdir: /projects/quarkus-reactjs-postit-app/node-frontend/
 
   - name: start PROD node-frontend
     actions:
       - type: exec
         command: npm start
         component: node-frontend-dev
-        workdir: /projects/postit-app/node-frontend/
+        workdir: /projects/quarkus-reactjs-postit-app/node-frontend/
 
 
   - name: oc - deploy app (quarkus NATIVE) from github
@@ -214,7 +207,7 @@ commands:
                   oc logs -f bc/node-frontend
                   echo node-frontend url http://$(oc get route node-frontend --template='{{ .spec.host }}')
         component: vscode-openshift
-        workdir: /projects/postit-app/node-frontend/
+        workdir: /projects/quarkus-reactjs-postit-app/node-frontend/
 
   - name: oc - deploy app (quarkus JVM) from github
     actions:
@@ -237,7 +230,7 @@ commands:
                   oc logs -f bc/node-frontend
                   echo node-frontend url http://$(oc get route node-frontend --template='{{ .spec.host }}')
         component: vscode-openshift
-        workdir: /projects/postit-app/node-frontend/
+        workdir: /projects/quarkus-reactjs-postit-app/node-frontend/
 
   - name: oc - redeploy quarkus-backend (from local sources)
     actions:
@@ -246,7 +239,7 @@ commands:
                   oc start-build quarkus-backend --from-dir=.
                   oc logs -f bc/quarkus-backend
         component: vscode-openshift
-        workdir: /projects/postit-app/
+        workdir: /projects/quarkus-reactjs-postit-app/
 
 
   - name: oc - redeploy node-frontend (from local sources)
@@ -257,7 +250,7 @@ commands:
                   oc logs -f bc/node-frontend
 
         component: vscode-openshift
-        workdir: /projects/postit-app/
+        workdir: /projects/quarkus-reactjs-postit-app/
 
 
 
@@ -269,7 +262,7 @@ commands:
                   read replicas;
                   oc scale dc/node-frontend --replicas=${replicas}
         component: vscode-openshift
-        workdir: /projects/postit-app/
+        workdir: /projects/quarkus-reactjs-postit-app/
 
   - name: oc - scale quarkus-backend
     actions:
@@ -279,7 +272,7 @@ commands:
                   read replicas;
                   oc scale dc/quarkus-backend --replicas=${replicas}
         component: vscode-openshift
-        workdir: /projects/postit-app/
+        workdir: /projects/quarkus-reactjs-postit-app/
 
   - name: oc - get node-frontend URL
     actions:
@@ -287,7 +280,7 @@ commands:
         command: |-
                   echo node-frontend url http://$(oc get route node-frontend --template='{{ .spec.host }}')
         component: vscode-openshift
-        workdir: /projects/postit-app/node-frontend/
+        workdir: /projects/quarkus-reactjs-postit-app/node-frontend/
 
 
 
