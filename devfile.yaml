@@ -5,6 +5,20 @@ metadata:
 
 components:
 
+  - type: dockerimage
+    image: sebi2706/uppercase-sg-service
+    memoryLimit: 32M
+    env:
+      - value: '8082'
+        name: QUARKUS_HTTP_PORT
+    endpoints:
+      - name: uppercase-sg-service
+        port: 8082
+        attributes:
+          path: /touppercase?p=uppercase%20service
+
+
+
   - alias: quarkus-backend-dev
     type: dockerimage
     image: quay.io/quarkus/centos-quarkus-maven:20.1.0-java11

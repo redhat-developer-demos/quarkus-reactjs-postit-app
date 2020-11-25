@@ -16,6 +16,7 @@ class Post extends React.Component {
             timestamp: this.props.timestamp,
         }
         this.deletePost = this.deletePost.bind(this);
+        this.toUppercase = this.toUppercase.bind(this);
     }
 
     render() {
@@ -38,7 +39,10 @@ class Post extends React.Component {
                     <Col className="delete-post-button" sm={1}>
                         <Button variant="danger" type="submit" onClick={this.deletePost}>
                             Delete
-            </Button>
+                        </Button>
+                        <Button variant="primary" onClick={this.toUppercase}>
+                            toUppercase
+                        </Button>
                     </Col>
                 </Row>
             </Container>
@@ -63,6 +67,16 @@ class Post extends React.Component {
         window.location.reload();
     }
 
+    toUppercase() {
+        fetch(`touppercase?p=${encodeURI(this.state.title)}`, {
+            method: 'GET'
+        })
+            .then(response => response.text())
+            .then(data => {
+                this.state.title = data;
+                this.setState(this.state);
+            })
+    }
 }
 
 export default Post
