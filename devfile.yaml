@@ -5,6 +5,55 @@ metadata:
 
 components:
 
+  # Runtime Containers
+  - alias: mongo
+    type: dockerimage
+    image: centos/mongodb-34-centos7
+    memoryLimit: 512Mi
+    env:
+     - name: MONGODB_USER
+       value: user
+     - name: MONGODB_PASSWORD
+       value: password
+     - name: MONGODB_DATABASE
+       value: sampledb
+     - name: MONGODB_ADMIN_PASSWORD
+       value: password
+
+  - type: dockerimage
+    alias: quarkus-backend-native-prod
+    image: 'registry.access.redhat.com/ubi8/ubi-minimal'
+    memoryLimit: 32M
+    mountSources: true
+    endpoints:
+      - name: 'quarkus-prod'
+        port: 8080
+    command: ['tail']
+    args: ['-f', '/dev/null']
+    env:
+      - name: username
+        value: 'user'
+      - name: password
+        value: 'password'
+      - name: admin_password
+        value: 'password'
+      - name: uri
+        value: 'mongodb://localhost'
+
+  - alias: node-frontend-dev
+    mountSources: true
+    image: 'quay.io/eclipse/che-nodejs12-community:nightly'
+    memoryLimit: 768Mi
+    type: dockerimage
+    endpoints:
+      - name: 'node-dev'
+        port: 3000
+    env:
+      - name: FRONTEND_PORT
+        value: '3000'
+
+
+  # Dev/build containers
   - alias: quarkus-backend-dev
     type: dockerimage
     image: quay.io/quarkus/centos-quarkus-maven:20.1.0-java11
@@ -30,6 +79,13 @@ components:
       - name: m2
         containerPath: /.m2
 
+  - alias: git
+    type: dockerimage
+    image: sunix/git-devtools
+    mountSources: true
+    memoryLimit: 64M
+    args: ['sleep', 'infinity']
+
   - mountSources: true
     memoryLimit: 64M
     type: dockerimage
@@ -39,53 +95,7 @@ components:
       - name: m2
         containerPath: /work/volumes/.m2
 
-  - alias: node-frontend-dev
-    mountSources: true
-    image: 'quay.io/eclipse/che-nodejs12-community:nightly'
-    memoryLimit: 768Mi
-    type: dockerimage
-    endpoints:
-      - name: '3000-tcp'
-        port: 3000
-    env:
-      - name: FRONTEND_PORT
-        value: '3000'
-
-
-  - type: dockerimage
-    alias: quarkus-backend-native-prod
-    image: 'registry.access.redhat.com/ubi8/ubi-minimal'
-    memoryLimit: 32M
-    mountSources: true
-    endpoints:
-      - name: 'hello-greeting-endpoint'
-        port: 8080
-    command: ['tail']
-    args: ['-f', '/dev/null']
-    env:
-      - name: username
-        value: 'user'
-      - name: password
-        value: 'password'
-      - name: admin_password
-        value: 'password'
-      - name: uri
-        value: 'mongodb://localhost'
-
-  - alias: mongo
-    type: dockerimage
-    image: centos/mongodb-34-centos7
-    memoryLimit: 512Mi
-    env:
-     - name: MONGODB_USER
-       value: user
-     - name: MONGODB_PASSWORD
-       value: password
-     - name: MONGODB_DATABASE
-       value: sampledb
-     - name: MONGODB_ADMIN_PASSWORD
-       value: password
-
+  # Plugins
   - id: redhat/quarkus-java11/latest
     type: chePlugin
 
@@ -98,12 +108,6 @@ components:
   - id: che-incubator/typescript/latest
     type: chePlugin
 
-  - alias: git
-    type: dockerimage
-    image: sunix/git-devtools
-    mountSources: true
-    memoryLimit: 64M
-    args: ['sleep', 'infinity']
 
 commands:
 
