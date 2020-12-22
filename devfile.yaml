@@ -108,6 +108,15 @@ components:
   - id: che-incubator/typescript/latest
     type: chePlugin
 
+  - alias: didact-plugin
+    type: chePlugin
+    id: redhat/vscode-didact/latest
+    preferences:
+      didact.openDefaultTutorialAtStartup: true
+      che.welcome.enable: false
+      didact.defaultUrl: /projects/quarkus-reactjs-postit-app/.che-didact-guide.md
+    registryUrl: 'https://che-plugin-registry-main.surge.sh/v3'
+
 
 commands:
 
