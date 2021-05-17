@@ -99,13 +99,11 @@ components:
   - id: redhat/quarkus-java11/latest
     type: chePlugin
 
-  - reference: >-
-      https://github.com/eclipse/che-plugin-registry/raw/7.21.2/v3/plugins/redhat/vscode-openshift-connector/0.1.2/meta.yaml
-    #id: redhat/vscode-openshift-connector/latest
+  - id: redhat/vscode-openshift-connector/latest
     type: chePlugin
     alias: vscode-openshift
 
-  - id: che-incubator/typescript/latest
+  - id: vscode/typescript-language-features/latest
     type: chePlugin
 
   - alias: didact-plugin
