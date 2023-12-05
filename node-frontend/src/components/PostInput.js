@@ -73,22 +73,22 @@ class PostInput extends React.Component {
         {this.handleErrorAlert()}
         <Form>
           <Form.Group controlId="formTitle">
-            <Form.Label>Title</Form.Label>
+            <Form.Label className="mt-2">Title</Form.Label>
             <Form.Control
               type="text"
               value={this.state.title}
               onChange={this.handleTitleChange}
               placeholder="Title" />
           </Form.Group>
-          <Form.Group controlId="formContnet">
-            <Form.Label>Content</Form.Label>
+          <Form.Group controlId="formContent">
+            <Form.Label className="mt-2">Content</Form.Label>
             <Form.Control
               as="textarea"
               value={this.state.content}
               onChange={this.handleContentChange}
               placeholder="Enter text" />
           </Form.Group>
-          <Button variant="primary" type="submit" onClick={this.handleSubmit}>
+          <Button variant="primary" type="submit" className="mt-2" onClick={this.handleSubmit}>
             Submit
           </Button>
         </Form>
