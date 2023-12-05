@@ -2,7 +2,6 @@ import React from 'react';
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
-import ReactMarkdown from 'react-markdown';
 import Button from 'react-bootstrap/Button';
 
 
@@ -28,7 +27,7 @@ class Post extends React.Component {
                 </Row>
                 <Row className="post-content">
                     <Col>
-                        <ReactMarkdown source={this.state.content} />
+                        {this.state.content}
                     </Col>
                 </Row>
                 <Row className="post-footer justify-content-between">
